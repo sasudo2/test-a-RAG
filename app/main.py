@@ -7,7 +7,7 @@ from app.db.models import Base
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    async with engine.being() as connection:
+    async with engine.begin() as connection:
         await connection.run_sync(Base.metadata.create_all)
     yield
     await engine.dispose()
@@ -15,9 +15,9 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.include_router(documents_router)
 
-@app.post("")
+@app.get("/")
 async def start():
-    pass
+    return {"message": "Hello!"}
 
 
 @app.get("/health")
