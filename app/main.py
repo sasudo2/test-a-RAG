@@ -1,0 +1,27 @@
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from app.services.document_loader import router as documents_router
+from uuid import UUID, uuid4
+from app.db.database import engine
+from app.db.models import Base
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    async with engine.being() as connection:
+        await connection.run_sync(Base.metadata.create_all)
+    yield
+    await engine.dispose()
+
+app = FastAPI(lifespan=lifespan)
+app.include_router(documents_router)
+
+@app.post("")
+async def start():
+    pass
+
+
+@app.get("/health")
+async def health():
+    return {"status":"ok"}
+
+

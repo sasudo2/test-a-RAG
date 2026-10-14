@@ -6,7 +6,8 @@
         "vscode":{
             "extensions": [
                 "ms-python.python",
-                "ms-python.vscode-pylance"
+                "ms-python.vscode-pylance",
+                "ms-azuretools.vscode-containers"
             ],
             "settings": {
                 "python.defaultInterpreterPath": "/usr/local/bin/python"
