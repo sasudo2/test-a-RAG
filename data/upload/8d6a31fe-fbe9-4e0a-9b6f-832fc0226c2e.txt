@@ -1,0 +1,32 @@
+1. INTRODUCTION
+1.1 The Paradigm Shift: From Euclidean Grids to Non-Euclidean Graphs
+For decades, the transformative success of Deep Learning has been largely confined to data structured in Euclidean domains. Convolutional Neural Networks (CNNs) have redefined computer vision by exploiting the regular 2D grid structure of images, while Recurrent Neural Networks (RNNs) and Transformers have revolutionized Natural Language Processing (NLP) by leveraging the 1D sequential nature of text. However, these data types represent only a small fraction of the information found in the real world. Many of the most critical challenges in modern science—ranging from the analysis of social network dynamics and knowledge graphs to the prediction of molecular properties in quantum chemistry—involve data that is fundamentally non-Euclidean.
+
+Graphs serve as a universal language for describing these complex systems. In a graph, elements (nodes) are interconnected by rich relational information (edges). Unlike images, graphs are characterized by permutation invariance, meaning they lack a fixed coordinate system or a natural ordering of nodes. Consequently, traditional sliding-window filters used in CNNs cannot be applied to graphs because the local neighborhood of a node is irregular and varies in size. This fundamental structural gap necessitated the birth of Graph Neural Networks (GNNs), a specialized class of architectures designed to perform deep representation learning directly on graph-structured data.
+
+1.2 The Foundational Era: Recursive and Recurrent Origins
+The historical journey of GNNs began with the challenge of how to map a variable-sized graph into a fixed-dimensional vector space while preserving its topological properties. Early attempts in the late 1990s were restricted to directed acyclic graphs (DAGs). However, the field reached a pivotal milestone with the work of Scarselli et al. (2009), who formalized a generalized framework for GNNs capable of handling cycles and undirected structures.
+
+Scarselli’s approach was fundamentally recursive. It viewed a graph as a dynamic system where each node possesses a hidden state vector. These states were updated iteratively by exchanging information with immediate neighbors. To ensure that this iterative process would eventually converge to a unique equilibrium, the model relied on the Banach Fixed-Point Theorem, requiring the transition functions to be contraction maps. While mathematically elegant and robust, these recursive models were computationally expensive and struggled with "vanishing gradients" over many iterations, which limited their ability to capture long-range dependencies within deep graph structures.
+
+1.3 The Transition to Constructive and Layered Architectures
+Parallel to the recursive movement, Micheli (2009) proposed a distinct philosophical shift through Neural Networks for Graphs (NN4G). Micheli introduced a constructive/feedforward approach, proving that graph representations could be built layer-by-layer rather than through iterative convergence to a fixed point. This was a visionary step toward the modern "Deep Learning" era of GNNs.
+
+By stacking multiple layers of neurons to aggregate neighborhood information, NN4G pre-empted the hierarchical abstraction that defines modern architectures: learning simple localized features in the initial layers and complex, global structural motifs in the deeper layers. This evolution allowed GNNs to break free from the constraints of contraction maps, opening the door for the development of more expressive and deeper models that could be trained using standard backpropagation techniques.
+
+1.4 The Convolutional Revolution: Spectral and Spatial Waves
+As GNNs matured, the research community sought to generalize the concept of "convolution" to irregular graphs. This led to two major sub-fields: Spectral GNNs and Spatial GNNs. The spectral approach, initiated by Bruna et al. (2014), leveraged Graph Signal Processing and the Graph Laplacian to define filters in the Fourier domain. While theoretically powerful, early spectral models were "transductive" (unable to generalize to new graphs) and computationally heavy.
+
+The bridge to practical, scalable application was built by Kipf & Welling (2017) with the introduction of the Graph Convolutional Network (GCN). By applying a first-order approximation of spectral filters, the GCN simplified the complex mathematics into a localized spatial operation that could be executed with high efficiency. This breakthrough allowed GNNs to scale to massive datasets, such as citation networks and social graphs, and transformed GNNs from a theoretical curiosity into a standard tool for industrial data science.
+
+1.5 Unification: The Neural Message Passing Paradigm
+The current state-of-the-art in Graph Representation Learning is defined by the Neural Message Passing paradigm. In their landmark work, Gilmer et al. (2017)—initially focusing on quantum chemistry—identified that most successful GNN variants, despite their differing mathematical origins, followed a common underlying logic. They proposed the Message Passing Neural Network (MPNN) framework, which unifies the field into a two-phase process:
+
+The Message Phase: Each node generates a "message" based on its current state and those of its neighbors.
+
+The Update Phase: Each node aggregates these messages (using a function like sum, mean, or max) to update its internal representation.
+
+This unification was a watershed moment. It moved the academic discourse away from specific mathematical implementations (Spectral vs. Spatial) toward a more flexible framework of "Information Exchange." This paradigm has enabled the development of inductive models like GraphSAGE (Hamilton et al., 2017) and attention-based models like GAT (Veličković et al., 2018), which now power cutting-edge applications in drug discovery, recommendation systems, and protein folding (e.g., AlphaFold).
+
+1.6 Contributions and Organization of this Review
+While several surveys on GNNs exist, this paper provides a unique technical perspective by mapping the "Architectural Journey" from the initial constraints of recursive stability to the current efficiency of message-passing paradigms. We provide a rigorous analysis of the transition from fixed-point iterations to layered abstractions, synthesizing the contributions of Scarselli, Micheli, and Gilmer.

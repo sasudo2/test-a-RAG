@@ -5,3 +5,8 @@ class Document(BaseModel):
     session_id: UUID
     filename: str = Field(min_length=1)
     text: str
+
+class RAGQuery(BaseModel):
+    session_id: UUID
+    query: str
+

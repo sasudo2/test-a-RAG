@@ -6,3 +6,10 @@ pydantic-settings
 sqlalchemy[asyncio]
 aiosqlite
 uvicorn[standard]
+streamlit
+requests
+lanchain-community 
+langchain-text-splitter
+langchain_huggingface
+sentence-transformers
+langchain-chroma

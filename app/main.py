@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from app.services.document_loader import router as documents_router
+from app.services.routers import router as documents_router
 from uuid import UUID, uuid4
 from app.db.database import engine
 from app.db.models import Base
