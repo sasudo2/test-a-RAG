@@ -6,7 +6,7 @@ from sqlalchemy import select
 from app.core.config import setting
 from pathlib import Path
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.document_loader import TextLoader
+from langchain_community.document_loaders import TextLoader
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 
@@ -30,7 +30,7 @@ async def verify_session(session_id: UUID, db: AsyncSession) -> SessionRecord:
         raise HTTPException(status_code=404, detail="session not found")
     return session
 
-async def assigne_session(db: AsyncSession) -> SessionRecord:
+async def assign_session(db: AsyncSession) -> SessionRecord:
     session = SessionRecord(id = uuid4())
     db.add(session)
     await db.flush()
@@ -51,7 +51,7 @@ async def chunk_documents(records:list, chunk_size = 500, chunk_overlap = 150) -
     for record in records:
         loader = TextLoader(record.storage_path, encoding = "utf-8")
         loaded = await loader.aload()
-        all_chunks.extend(splitter.split_docuemnts(loaded))
+        all_chunks.extend(splitter.split_documents(loaded))
     return all_chunks
 
 
@@ -59,10 +59,10 @@ async def chunk_documents(records:list, chunk_size = 500, chunk_overlap = 150) -
 async def vector_store_push(session_id:UUID, chunks: list, v_db: Chroma):
     for chunk in chunks:
         chunk.metadata["session_id"] = str(session_id)
-    return await v_db.aadd_docuements(chunks)
+    return await v_db.aadd_documents(chunks)
 
 async def vector_store_query(session_id:UUID, query: list, v_db: Chroma):
-    return await v_db.asimilairity_search(
+    return await v_db.asimilarity_search(
         query,
         k=4,
         filter={"session_id": str(session_id)}

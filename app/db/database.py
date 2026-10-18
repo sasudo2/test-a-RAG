@@ -20,7 +20,7 @@ def get_vector_store()-> Chroma:
     persist_directory = Path("data/chroma")
     persist_directory.mkdir(parents=True, exist_ok=True)
     embeddings = HuggingFaceEmbeddings(
-        maodel_name="sentence-transformer/all-MiniLM-L6-v2"
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
     return Chroma(
         collection_name="documents",
